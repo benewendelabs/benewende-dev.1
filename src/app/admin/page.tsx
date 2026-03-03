@@ -740,7 +740,7 @@ export default function AdminDashboard() {
                     const toggles = [
                       { key: "cvGenerator", label: "Générateur de CV", desc: "Page /cv-generator — création de CV avec templates et IA", default: true },
                       { key: "converter", label: "Convertisseur d'images", desc: "Page /converter — conversion PNG/JPG/WebP/ICO/SVG", default: true },
-                      { key: "auth", label: "Connexion / Inscription", desc: "Pages /auth/login et /auth/register — comptes utilisateurs", default: false },
+                      { key: "auth", label: "Connexion / Inscription", desc: "Pages /auth/login et /auth/register — comptes utilisateurs", default: true },
                       { key: "contact", label: "Formulaire de contact", desc: "Section contact sur la page d'accueil", default: true },
                       { key: "payments", label: "Paiements (CinetPay)", desc: "Page /payment — paiements Mobile Money", default: false },
                       { key: "card", label: "Carte de visite digitale", desc: "Page /card — votre carte de visite interactive", default: true },

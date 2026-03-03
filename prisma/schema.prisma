@@ -26,7 +26,8 @@ model User {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
-  cvDocuments   CVDocument[]
+  cvDocuments    CVDocument[]
+  clientProjects ClientProject[]
 }
 
 model ContactMessage {
@@ -146,4 +147,59 @@ model Payment {
 model SiteSetting {
   id    String @id
   value String // JSON
+}
+
+// ── Client Portal ──────────────────────────────────────────
+
+model ClientProject {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name        String
+  description String
+  status      String   @default("discovery") // discovery | design | development | testing | review | delivered | maintenance
+  priority    String   @default("normal")    // low | normal | high | urgent
+  progress    Int      @default(0)           // 0-100
+  budget      String?
+  currency    String   @default("XOF")
+  startDate   DateTime @default(now())
+  deadline    DateTime?
+  completedAt DateTime?
+  techStack   String?  // JSON array
+  repoUrl     String?
+  liveUrl     String?
+  visible     Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  milestones  ProjectMilestone[]
+  updates     ProjectUpdate[]
+}
+
+model ProjectMilestone {
+  id              String   @id @default(cuid())
+  clientProjectId String
+  clientProject   ClientProject @relation(fields: [clientProjectId], references: [id], onDelete: Cascade)
+  title           String
+  description     String?
+  status          String   @default("pending") // pending | in_progress | completed | blocked
+  dueDate         DateTime?
+  completedAt     DateTime?
+  sortOrder       Int      @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model ProjectUpdate {
+  id              String   @id @default(cuid())
+  clientProjectId String
+  clientProject   ClientProject @relation(fields: [clientProjectId], references: [id], onDelete: Cascade)
+  authorRole      String   @default("admin") // admin | client
+  authorName      String
+  title           String
+  content         String
+  type            String   @default("update") // update | milestone | delivery | feedback | invoice
+  attachmentUrl   String?
+  attachmentName  String?
+  createdAt       DateTime @default(now())
 }

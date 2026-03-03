@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Moon, Sun, Globe, MessageCircle, Shield, LogOut, CreditCard, FileType } from "lucide-react";
+import { Menu, X, Moon, Sun, Globe, MessageCircle, Shield, LogOut, LogIn, CreditCard, FileType, LayoutDashboard, User } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useSession, signOut } from "next-auth/react";
 import { Button } from "@/components/ui/button";
@@ -177,15 +177,23 @@ export default function Navigation() {
               </Button>
             )}
 
-            {/* Admin controls - only for logged-in admins */}
-            {isLoggedIn && isAdminUser && (
+            {/* Auth + user controls */}
+            {isLoggedIn ? (
               <div className="flex items-center gap-1.5">
-                <Link href="/admin">
+                <Link href="/dashboard">
                   <Button variant="ghost" size="sm" className="gap-1.5 text-xs">
-                    <Shield className="h-3.5 w-3.5" />
-                    Admin
+                    <LayoutDashboard className="h-3.5 w-3.5" />
+                    Dashboard
                   </Button>
                 </Link>
+                {isAdminUser && (
+                  <Link href="/admin">
+                    <Button variant="ghost" size="sm" className="gap-1.5 text-xs">
+                      <Shield className="h-3.5 w-3.5" />
+                      Admin
+                    </Button>
+                  </Link>
+                )}
                 <Button
                   variant="ghost"
                   size="sm"
@@ -195,6 +203,15 @@ export default function Navigation() {
                   <LogOut className="h-3.5 w-3.5" />
                 </Button>
               </div>
+            ) : (
+              feat("auth", true) && (
+                <Link href="/auth/login">
+                  <Button variant="outline" size="sm" className="gap-1.5">
+                    <LogIn className="h-3.5 w-3.5" />
+                    Connexion
+                  </Button>
+                </Link>
+              )
             )}
 
             {/* WhatsApp button for everyone */}
@@ -275,15 +292,27 @@ export default function Navigation() {
                   WhatsApp
                 </Button>
               </a>
-              {/* Admin controls mobile */}
-              {isLoggedIn && isAdminUser && (
+              {/* User controls mobile */}
+              {isLoggedIn ? (
                 <div className="flex items-center gap-2 pt-2 border-t border-border mt-2">
-                  <Link href="/admin" onClick={() => setIsMobileOpen(false)}>
+                  <div className="flex items-center gap-2 flex-1">
+                    <User className="h-4 w-4 text-muted-foreground" />
+                    <span className="text-sm text-muted-foreground truncate">{user?.name}</span>
+                  </div>
+                  <Link href="/dashboard" onClick={() => setIsMobileOpen(false)}>
                     <Button variant="outline" size="sm" className="gap-1 text-xs">
-                      <Shield className="h-3 w-3" />
-                      Admin
+                      <LayoutDashboard className="h-3 w-3" />
+                      Dashboard
                     </Button>
                   </Link>
+                  {isAdminUser && (
+                    <Link href="/admin" onClick={() => setIsMobileOpen(false)}>
+                      <Button variant="outline" size="sm" className="gap-1 text-xs">
+                        <Shield className="h-3 w-3" />
+                        Admin
+                      </Button>
+                    </Link>
+                  )}
                   <Button
                     variant="ghost"
                     size="sm"
@@ -293,6 +322,15 @@ export default function Navigation() {
                     <LogOut className="h-3.5 w-3.5" />
                   </Button>
                 </div>
+              ) : (
+                feat("auth", true) && (
+                  <Link href="/auth/login" onClick={() => setIsMobileOpen(false)} className="block pt-2 border-t border-border mt-2">
+                    <Button variant="outline" size="sm" className="w-full gap-1.5">
+                      <LogIn className="h-3.5 w-3.5" />
+                      Connexion
+                    </Button>
+                  </Link>
+                )
               )}
               <div className="flex items-center gap-2 pt-2 border-t border-border mt-2">
                 <div className="flex gap-1">
