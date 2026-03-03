@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Download,
@@ -16,6 +16,8 @@ import {
   Shield,
   Palette,
   Loader2,
+  PauseCircle,
+  MessageCircle,
 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -28,6 +30,19 @@ import { useCurrency } from "@/components/currency-provider";
 
 export default function CVGeneratorPage() {
   const [cvData, setCvData] = useState<CVData>({ ...defaultCVData });
+  const [featureEnabled, setFeatureEnabled] = useState<boolean | null>(null);
+  const [whatsappUrl, setWhatsappUrl] = useState("https://wa.me/22607267119");
+
+  useEffect(() => {
+    fetch("/api/content/settings")
+      .then((r) => r.json())
+      .then((data) => {
+        const features = data.features || {};
+        setFeatureEnabled(features.cvGenerator !== undefined ? !!features.cvGenerator : true);
+        if (data.site?.whatsapp) setWhatsappUrl(`https://wa.me/${(data.site.whatsapp as string).replace(/\D/g, "")}`);
+      })
+      .catch(() => setFeatureEnabled(true));
+  }, []);
   const [selectedTemplate, setSelectedTemplate] = useState("modern");
   const [isComplete, setIsComplete] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
@@ -69,6 +84,44 @@ export default function CVGeneratorPage() {
       setIsPdfLoading(false);
     }
   };
+
+  if (featureEnabled === null) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
+  }
+
+  if (featureEnabled === false) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center p-4">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-md text-center space-y-6">
+          <div className="h-20 w-20 rounded-2xl bg-amber-500/10 flex items-center justify-center mx-auto">
+            <PauseCircle className="h-10 w-10 text-amber-500" />
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold mb-2">Service en pause</h1>
+            <p className="text-muted-foreground">Le générateur de CV est temporairement désactivé. Contactez-nous sur WhatsApp pour toute demande.</p>
+          </div>
+          <div className="flex flex-col gap-3">
+            <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
+              <Button size="lg" className="w-full gap-2 bg-[#25D366] hover:bg-[#1da851] text-white">
+                <MessageCircle className="h-5 w-5" />
+                Nous contacter sur WhatsApp
+              </Button>
+            </a>
+            <Link href="/">
+              <Button variant="outline" size="lg" className="w-full gap-2">
+                <ArrowLeft className="h-4 w-4" />
+                Retour à l&apos;accueil
+              </Button>
+            </Link>
+          </div>
+        </motion.div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">

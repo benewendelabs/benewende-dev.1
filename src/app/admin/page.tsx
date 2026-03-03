@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import {
   Users, Mail, FileText, TrendingUp, Eye, Trash2, Archive,
   LogOut, ArrowLeft, Shield, FolderOpen, Briefcase, Code2,
-  Clock, Settings, Star, Bot, Cpu,
+  Clock, Settings, Star, Bot, Cpu, ToggleLeft, ToggleRight,
 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -721,6 +721,75 @@ export default function AdminDashboard() {
         {activeTab === "settings" && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
             <div className="space-y-6">
+              {/* Feature Toggles */}
+              <Card>
+                <CardHeader>
+                  <div className="flex items-center gap-2">
+                    <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-amber-500/20 to-amber-500/5 flex items-center justify-center">
+                      <ToggleLeft className="h-4 w-4 text-amber-500" />
+                    </div>
+                    <div>
+                      <CardTitle className="text-base">Fonctionnalités du site</CardTitle>
+                      <p className="text-[10px] text-muted-foreground mt-0.5">Activez ou désactivez les pages et services visibles sur le site</p>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  {(() => {
+                    const features = siteSettings.features || {};
+                    const toggles = [
+                      { key: "cvGenerator", label: "Générateur de CV", desc: "Page /cv-generator — création de CV avec templates et IA", default: true },
+                      { key: "converter", label: "Convertisseur d'images", desc: "Page /converter — conversion PNG/JPG/WebP/ICO/SVG", default: true },
+                      { key: "auth", label: "Connexion / Inscription", desc: "Pages /auth/login et /auth/register — comptes utilisateurs", default: false },
+                      { key: "contact", label: "Formulaire de contact", desc: "Section contact sur la page d'accueil", default: true },
+                      { key: "payments", label: "Paiements (CinetPay)", desc: "Page /payment — paiements Mobile Money", default: false },
+                      { key: "card", label: "Carte de visite digitale", desc: "Page /card — votre carte de visite interactive", default: true },
+                    ];
+                    const isEnabled = (key: string, def: boolean) => features[key] !== undefined ? !!features[key] : def;
+                    const toggle = (key: string, def: boolean) => {
+                      const current = isEnabled(key, def);
+                      setSiteSettings((p) => ({ ...p, features: { ...p.features, [key]: !current } }));
+                    };
+                    return (
+                      <>
+                        <div className="grid gap-2">
+                          {toggles.map((t) => {
+                            const on = isEnabled(t.key, t.default);
+                            return (
+                              <button
+                                key={t.key}
+                                onClick={() => toggle(t.key, t.default)}
+                                className={`flex items-center justify-between p-3 rounded-xl border text-left transition-all ${
+                                  on ? "border-emerald-500/30 bg-emerald-500/5" : "border-border/50 bg-muted/20 opacity-60"
+                                }`}
+                              >
+                                <div className="flex items-center gap-3">
+                                  {on ? <ToggleRight className="h-5 w-5 text-emerald-500 shrink-0" /> : <ToggleLeft className="h-5 w-5 text-muted-foreground shrink-0" />}
+                                  <div>
+                                    <span className="text-sm font-medium">{t.label}</span>
+                                    <p className="text-[10px] text-muted-foreground mt-0.5">{t.desc}</p>
+                                  </div>
+                                </div>
+                                <Badge variant={on ? "default" : "secondary"} className={`text-[10px] shrink-0 ${on ? "bg-emerald-500 hover:bg-emerald-600" : ""}`}>
+                                  {on ? "Activé" : "Désactivé"}
+                                </Badge>
+                              </button>
+                            );
+                          })}
+                        </div>
+                        <div className="flex items-center gap-3 pt-2">
+                          <Button size="sm" disabled={saveStatus === "saving"} onClick={() => saveSetting("features", siteSettings.features || {})}>
+                            {saveStatus === "saving" ? "Sauvegarde..." : "Sauvegarder Fonctionnalités"}
+                          </Button>
+                          {saveStatus === "saved" && <span className="text-xs text-green-500 font-medium">Sauvegardé !</span>}
+                          {saveStatus === "error" && <span className="text-xs text-red-500 font-medium">Erreur de sauvegarde</span>}
+                        </div>
+                      </>
+                    );
+                  })()}
+                </CardContent>
+              </Card>
+
               {/* Hero settings */}
               <Card>
                 <CardHeader>

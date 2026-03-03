@@ -3,13 +3,22 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Moon, Sun, Globe, LogIn, User, Shield, LogOut, CreditCard, FileType } from "lucide-react";
+import { Menu, X, Moon, Sun, Globe, MessageCircle, Shield, LogOut, CreditCard, FileType } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useSession, signOut } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { useCurrency } from "@/components/currency-provider";
 import { Currency, currencyLabels } from "@/data/services";
 import { ExtendedUser } from "@/lib/types";
+
+interface FeatureToggles {
+  cvGenerator?: boolean;
+  converter?: boolean;
+  auth?: boolean;
+  contact?: boolean;
+  payments?: boolean;
+  card?: boolean;
+}
 
 const navLinks = [
   { href: "#services", label: "Services" },
@@ -28,10 +37,14 @@ export default function Navigation() {
   const { currency, setCurrency } = useCurrency();
   const { data: session } = useSession();
   const [mounted, setMounted] = useState(false);
+  const [features, setFeatures] = useState<FeatureToggles>({});
+  const [whatsapp, setWhatsapp] = useState("");
 
   const user = session?.user as ExtendedUser | undefined;
   const isLoggedIn = !!session;
   const isAdminUser = user?.role === "admin";
+
+  const feat = (key: keyof FeatureToggles, def: boolean) => features[key] !== undefined ? !!features[key] : def;
 
   useEffect(() => setMounted(true), []);
 
@@ -41,7 +54,18 @@ export default function Navigation() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    fetch("/api/content/settings")
+      .then((r) => r.json())
+      .then((data) => {
+        if (data.features) setFeatures(data.features as FeatureToggles);
+        if (data.site?.whatsapp) setWhatsapp(data.site.whatsapp as string);
+      })
+      .catch(() => {});
+  }, []);
+
   const currencies: Currency[] = ["XOF", "EUR", "USD"];
+  const whatsappUrl = whatsapp ? `https://wa.me/${whatsapp.replace(/\D/g, "")}` : "https://wa.me/22607267119";
 
   return (
     <motion.header
@@ -74,23 +98,29 @@ export default function Navigation() {
                 {link.label}
               </a>
             ))}
-            <Link href="/cv-generator">
-              <Button size="sm" className="ml-2">
-                CV Generator
-              </Button>
-            </Link>
-            <Link href="/card">
-              <Button variant="outline" size="sm" className="gap-1.5">
-                <CreditCard className="h-3.5 w-3.5" />
-                Ma Carte
-              </Button>
-            </Link>
-            <Link href="/converter">
-              <Button variant="outline" size="sm" className="gap-1.5">
-                <FileType className="h-3.5 w-3.5" />
-                Convertisseur
-              </Button>
-            </Link>
+            {feat("cvGenerator", true) && (
+              <Link href="/cv-generator">
+                <Button size="sm" className="ml-2">
+                  CV Generator
+                </Button>
+              </Link>
+            )}
+            {feat("card", true) && (
+              <Link href="/card">
+                <Button variant="outline" size="sm" className="gap-1.5">
+                  <CreditCard className="h-3.5 w-3.5" />
+                  Ma Carte
+                </Button>
+              </Link>
+            )}
+            {feat("converter", true) && (
+              <Link href="/converter">
+                <Button variant="outline" size="sm" className="gap-1.5">
+                  <FileType className="h-3.5 w-3.5" />
+                  Convertisseur
+                </Button>
+              </Link>
+            )}
           </div>
 
           <div className="hidden md:flex items-center gap-2">
@@ -147,16 +177,15 @@ export default function Navigation() {
               </Button>
             )}
 
-            {isLoggedIn ? (
+            {/* Admin controls - only for logged-in admins */}
+            {isLoggedIn && isAdminUser && (
               <div className="flex items-center gap-1.5">
-                {isAdminUser && (
-                  <Link href="/admin">
-                    <Button variant="ghost" size="sm" className="gap-1.5 text-xs">
-                      <Shield className="h-3.5 w-3.5" />
-                      Admin
-                    </Button>
-                  </Link>
-                )}
+                <Link href="/admin">
+                  <Button variant="ghost" size="sm" className="gap-1.5 text-xs">
+                    <Shield className="h-3.5 w-3.5" />
+                    Admin
+                  </Button>
+                </Link>
                 <Button
                   variant="ghost"
                   size="sm"
@@ -166,14 +195,15 @@ export default function Navigation() {
                   <LogOut className="h-3.5 w-3.5" />
                 </Button>
               </div>
-            ) : (
-              <Link href="/auth/login">
-                <Button variant="outline" size="sm" className="gap-1.5">
-                  <LogIn className="h-3.5 w-3.5" />
-                  Connexion
-                </Button>
-              </Link>
             )}
+
+            {/* WhatsApp button for everyone */}
+            <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
+              <Button size="sm" className="gap-1.5 bg-[#25D366] hover:bg-[#1da851] text-white">
+                <MessageCircle className="h-3.5 w-3.5" />
+                WhatsApp
+              </Button>
+            </a>
           </div>
 
           <Button
@@ -206,46 +236,54 @@ export default function Navigation() {
                   {link.label}
                 </a>
               ))}
-              <Link
-                href="/cv-generator"
-                onClick={() => setIsMobileOpen(false)}
-              >
-                <Button size="sm" className="w-full mt-2">
-                  CV Generator
+              {feat("cvGenerator", true) && (
+                <Link
+                  href="/cv-generator"
+                  onClick={() => setIsMobileOpen(false)}
+                >
+                  <Button size="sm" className="w-full mt-2">
+                    CV Generator
+                  </Button>
+                </Link>
+              )}
+              {feat("card", true) && (
+                <Link
+                  href="/card"
+                  onClick={() => setIsMobileOpen(false)}
+                >
+                  <Button variant="outline" size="sm" className="w-full mt-2 gap-1.5">
+                    <CreditCard className="h-3.5 w-3.5" />
+                    Ma Carte
+                  </Button>
+                </Link>
+              )}
+              {feat("converter", true) && (
+                <Link
+                  href="/converter"
+                  onClick={() => setIsMobileOpen(false)}
+                >
+                  <Button variant="outline" size="sm" className="w-full mt-2 gap-1.5">
+                    <FileType className="h-3.5 w-3.5" />
+                    Convertisseur
+                  </Button>
+                </Link>
+              )}
+              {/* WhatsApp mobile */}
+              <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" onClick={() => setIsMobileOpen(false)}>
+                <Button size="sm" className="w-full mt-2 gap-1.5 bg-[#25D366] hover:bg-[#1da851] text-white">
+                  <MessageCircle className="h-3.5 w-3.5" />
+                  WhatsApp
                 </Button>
-              </Link>
-              <Link
-                href="/card"
-                onClick={() => setIsMobileOpen(false)}
-              >
-                <Button variant="outline" size="sm" className="w-full mt-2 gap-1.5">
-                  <CreditCard className="h-3.5 w-3.5" />
-                  Ma Carte
-                </Button>
-              </Link>
-              <Link
-                href="/converter"
-                onClick={() => setIsMobileOpen(false)}
-              >
-                <Button variant="outline" size="sm" className="w-full mt-2 gap-1.5">
-                  <FileType className="h-3.5 w-3.5" />
-                  Convertisseur
-                </Button>
-              </Link>
-              {isLoggedIn ? (
+              </a>
+              {/* Admin controls mobile */}
+              {isLoggedIn && isAdminUser && (
                 <div className="flex items-center gap-2 pt-2 border-t border-border mt-2">
-                  <div className="flex items-center gap-2 flex-1">
-                    <User className="h-4 w-4 text-muted-foreground" />
-                    <span className="text-sm text-muted-foreground truncate">{user?.name}</span>
-                  </div>
-                  {isAdminUser && (
-                    <Link href="/admin" onClick={() => setIsMobileOpen(false)}>
-                      <Button variant="outline" size="sm" className="gap-1 text-xs">
-                        <Shield className="h-3 w-3" />
-                        Admin
-                      </Button>
-                    </Link>
-                  )}
+                  <Link href="/admin" onClick={() => setIsMobileOpen(false)}>
+                    <Button variant="outline" size="sm" className="gap-1 text-xs">
+                      <Shield className="h-3 w-3" />
+                      Admin
+                    </Button>
+                  </Link>
                   <Button
                     variant="ghost"
                     size="sm"
@@ -255,13 +293,6 @@ export default function Navigation() {
                     <LogOut className="h-3.5 w-3.5" />
                   </Button>
                 </div>
-              ) : (
-                <Link href="/auth/login" onClick={() => setIsMobileOpen(false)} className="block pt-2 border-t border-border mt-2">
-                  <Button variant="outline" size="sm" className="w-full gap-1.5">
-                    <LogIn className="h-3.5 w-3.5" />
-                    Connexion
-                  </Button>
-                </Link>
               )}
               <div className="flex items-center gap-2 pt-2 border-t border-border mt-2">
                 <div className="flex gap-1">
