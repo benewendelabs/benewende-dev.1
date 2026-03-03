@@ -26,16 +26,28 @@ interface HeroSettings {
   available?: boolean;
 }
 
+interface FeatureToggles {
+  cvGenerator?: boolean;
+  converter?: boolean;
+  card?: boolean;
+}
+
 export default function Hero() {
   const [currentText, setCurrentText] = useState(0);
   const [displayedText, setDisplayedText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
   const [heroSettings, setHeroSettings] = useState<HeroSettings>({});
+  const [features, setFeatures] = useState<FeatureToggles>({});
+
+  const feat = (key: keyof FeatureToggles, def: boolean) => features[key] !== undefined ? !!features[key] : def;
 
   useEffect(() => {
     fetch("/api/content/settings")
       .then((res) => (res.ok ? res.json() : null))
-      .then((data) => { if (data?.hero) setHeroSettings(data.hero); })
+      .then((data) => {
+        if (data?.hero) setHeroSettings(data.hero);
+        if (data?.features) setFeatures(data.features as FeatureToggles);
+      })
       .catch(() => {});
   }, []);
 
@@ -126,26 +138,30 @@ export default function Hero() {
               Voir mes projets
             </Button>
           </a>
-          <Link href="/cv-generator">
-            <Button
-              size="lg"
-              variant="outline"
-              className="gap-2 text-base px-8"
-            >
-              <FileText className="h-5 w-5" />
-              Générer mon CV
-            </Button>
-          </Link>
-          <Link href="/card">
-            <Button
-              size="lg"
-              variant="outline"
-              className="gap-2 text-base px-8"
-            >
-              <CreditCard className="h-5 w-5" />
-              Ma Carte
-            </Button>
-          </Link>
+          {feat("cvGenerator", true) && (
+            <Link href="/cv-generator">
+              <Button
+                size="lg"
+                variant="outline"
+                className="gap-2 text-base px-8"
+              >
+                <FileText className="h-5 w-5" />
+                Générer mon CV
+              </Button>
+            </Link>
+          )}
+          {feat("card", true) && (
+            <Link href="/card">
+              <Button
+                size="lg"
+                variant="outline"
+                className="gap-2 text-base px-8"
+              >
+                <CreditCard className="h-5 w-5" />
+                Ma Carte
+              </Button>
+            </Link>
+          )}
         </motion.div>
 
         <motion.div

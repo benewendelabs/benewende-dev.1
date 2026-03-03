@@ -41,37 +41,46 @@ const RedditIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-const footerLinks = [
-  {
-    title: "Navigation",
-    links: [
-      { label: "Services", href: "#services" },
-      { label: "Projets", href: "#projets" },
-      { label: "Compétences", href: "#competences" },
-      { label: "Contact", href: "#contact" },
-    ],
-  },
-  {
-    title: "Services",
-    links: [
-      { label: "Développement SaaS", href: "#services" },
-      { label: "Web App", href: "#services" },
-      { label: "Solutions IA", href: "#services" },
-      { label: "CV Generator", href: "/cv-generator" },
-      { label: "Convertisseur", href: "/converter" },
-    ],
-  },
-  {
-    title: "Ressources",
-    links: [
-      { label: "Process", href: "#process" },
-      { label: "Témoignages", href: "#temoignages" },
-      { label: "Expérience", href: "#experience" },
-      { label: "Paiement", href: "/payment" },
-      { label: "Ma Carte", href: "/card" },
-    ],
-  },
-];
+interface FeatureToggles {
+  cvGenerator?: boolean;
+  converter?: boolean;
+  payments?: boolean;
+  card?: boolean;
+}
+
+function buildFooterLinks(ft: FeatureToggles) {
+  const feat = (key: keyof FeatureToggles, def: boolean) => ft[key] !== undefined ? !!ft[key] : def;
+
+  const servicesLinks = [
+    { label: "Développement SaaS", href: "#services" },
+    { label: "Web App", href: "#services" },
+    { label: "Solutions IA", href: "#services" },
+  ];
+  if (feat("cvGenerator", true)) servicesLinks.push({ label: "CV Generator", href: "/cv-generator" });
+  if (feat("converter", true)) servicesLinks.push({ label: "Convertisseur", href: "/converter" });
+
+  const ressourcesLinks = [
+    { label: "Process", href: "#process" },
+    { label: "Témoignages", href: "#temoignages" },
+    { label: "Expérience", href: "#experience" },
+  ];
+  if (feat("payments", false)) ressourcesLinks.push({ label: "Paiement", href: "/payment" });
+  if (feat("card", true)) ressourcesLinks.push({ label: "Ma Carte", href: "/card" });
+
+  return [
+    {
+      title: "Navigation",
+      links: [
+        { label: "Services", href: "#services" },
+        { label: "Projets", href: "#projets" },
+        { label: "Compétences", href: "#competences" },
+        { label: "Contact", href: "#contact" },
+      ],
+    },
+    { title: "Services", links: servicesLinks },
+    { title: "Ressources", links: ressourcesLinks },
+  ];
+}
 
 const defaultSiteSettings: SiteSettings = {
   github: "https://github.com/benewende",
@@ -86,6 +95,8 @@ export default function Footer() {
   const allSettings = useContent<Record<string, unknown>>("settings", {});
   const site = { ...defaultSiteSettings, ...((allSettings.site as SiteSettings) || {}) };
   const footer = (allSettings.footer as FooterSettings) || {};
+  const features = (allSettings.features as FeatureToggles) || {};
+  const footerLinks = buildFooterLinks(features);
 
   const socials = [
     { icon: Github, href: site.github, label: "GitHub" },
