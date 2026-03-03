@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { UserPlus, Eye, EyeOff, ArrowLeft, Loader2 } from "lucide-react";
@@ -10,8 +10,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-export default function RegisterPage() {
+function RegisterForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,7 +25,7 @@ export default function RegisterPage() {
 
   const handleSocialLogin = (provider: string) => {
     setSocialLoading(provider);
-    signIn(provider, { callbackUrl: "/cv-generator" });
+    signIn(provider, { callbackUrl });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -69,7 +71,7 @@ export default function RegisterPage() {
         return;
       }
 
-      router.push("/cv-generator");
+      router.push(callbackUrl);
       router.refresh();
     } catch {
       setError("Une erreur est survenue");
@@ -103,7 +105,7 @@ export default function RegisterPage() {
             </Link>
             <CardTitle className="text-xl">Cr&eacute;er un compte</CardTitle>
             <p className="text-sm text-muted-foreground">
-              Inscrivez-vous pour utiliser le CV Generator
+              Inscrivez-vous pour accéder à votre espace client
             </p>
           </CardHeader>
           <CardContent>
@@ -263,5 +265,13 @@ export default function RegisterPage() {
         </Card>
       </motion.div>
     </div>
+  );
+}
+
+export default function RegisterPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="h-8 w-8 border-2 border-primary border-t-transparent rounded-full animate-spin" /></div>}>
+      <RegisterForm />
+    </Suspense>
   );
 }

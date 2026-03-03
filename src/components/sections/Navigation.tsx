@@ -223,14 +223,29 @@ export default function Navigation() {
             </a>
           </div>
 
-          <Button
-            variant="ghost"
-            size="icon"
-            className="md:hidden"
-            onClick={() => setIsMobileOpen(!isMobileOpen)}
-          >
-            {isMobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </Button>
+          <div className="flex items-center gap-1.5 md:hidden">
+            {!isLoggedIn && feat("auth", true) && (
+              <Link href="/auth/login">
+                <Button variant="outline" size="sm" className="gap-1 text-xs h-8 px-2.5">
+                  <LogIn className="h-3 w-3" />
+                  <span className="hidden xs:inline">Connexion</span>
+                </Button>
+              </Link>
+            )}
+            <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+              <Button size="sm" className="gap-1 bg-[#25D366] hover:bg-[#1da851] text-white h-8 px-2.5">
+                <MessageCircle className="h-3.5 w-3.5" />
+              </Button>
+            </a>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8"
+              onClick={() => setIsMobileOpen(!isMobileOpen)}
+            >
+              {isMobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </Button>
+          </div>
         </div>
       </nav>
 
@@ -294,37 +309,38 @@ export default function Navigation() {
               </a>
               {/* User controls mobile */}
               {isLoggedIn ? (
-                <div className="flex items-center gap-2 pt-2 border-t border-border mt-2">
-                  <div className="flex items-center gap-2 flex-1">
+                <div className="pt-3 border-t border-border mt-3 space-y-2">
+                  <div className="flex items-center gap-2 px-1 mb-2">
                     <User className="h-4 w-4 text-muted-foreground" />
                     <span className="text-sm text-muted-foreground truncate">{user?.name}</span>
                   </div>
-                  <Link href="/dashboard" onClick={() => setIsMobileOpen(false)}>
-                    <Button variant="outline" size="sm" className="gap-1 text-xs">
-                      <LayoutDashboard className="h-3 w-3" />
-                      Dashboard
+                  <Link href="/dashboard" onClick={() => setIsMobileOpen(false)} className="block">
+                    <Button variant="outline" size="sm" className="w-full gap-1.5">
+                      <LayoutDashboard className="h-3.5 w-3.5" />
+                      Mon Dashboard
                     </Button>
                   </Link>
                   {isAdminUser && (
-                    <Link href="/admin" onClick={() => setIsMobileOpen(false)}>
-                      <Button variant="outline" size="sm" className="gap-1 text-xs">
-                        <Shield className="h-3 w-3" />
-                        Admin
+                    <Link href="/admin" onClick={() => setIsMobileOpen(false)} className="block">
+                      <Button variant="outline" size="sm" className="w-full gap-1.5">
+                        <Shield className="h-3.5 w-3.5" />
+                        Administration
                       </Button>
                     </Link>
                   )}
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="text-xs"
+                    className="w-full gap-1.5 text-muted-foreground"
                     onClick={() => signOut({ callbackUrl: "/" })}
                   >
                     <LogOut className="h-3.5 w-3.5" />
+                    Déconnexion
                   </Button>
                 </div>
               ) : (
                 feat("auth", true) && (
-                  <Link href="/auth/login" onClick={() => setIsMobileOpen(false)} className="block pt-2 border-t border-border mt-2">
+                  <Link href="/auth/login" onClick={() => setIsMobileOpen(false)} className="block pt-3 border-t border-border mt-3">
                     <Button variant="outline" size="sm" className="w-full gap-1.5">
                       <LogIn className="h-3.5 w-3.5" />
                       Connexion
