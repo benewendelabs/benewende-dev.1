@@ -171,7 +171,7 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} {footer.copyright || "Benewende.dev. Tous droits réservés."}
           </p>
           <p className="text-xs text-muted-foreground flex items-center gap-1">
-            Fait avec <Heart className="h-3 w-3 text-red-500 fill-red-500" /> {footer.tagline && !footer.tagline.includes("Fait avec") ? footer.tagline : "à Ouagadougou"}
+            {footer.tagline ? footer.tagline : (<>Fait avec <Heart className="h-3 w-3 text-red-500 fill-red-500" /> à Ouagadougou</>)}
           </p>
         </div>
       </div>
