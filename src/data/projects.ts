@@ -25,6 +25,21 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    id: "wenastudio",
+    name: "WENA Studio",
+    description:
+      "Plateforme SaaS d'intelligence artificielle tout-en-un pour créateurs et entrepreneurs.",
+    longDescription:
+      "WENA Studio est une plateforme SaaS complète qui centralise l'accès à des agents IA spécialisés, la génération de contenu texte, images et vidéos, ainsi que des outils de productivité avancés. Conçue pour les créateurs, marketeurs et entrepreneurs qui veulent exploiter la puissance de l'IA sans complexité technique.",
+    image: "/projects/wenastudio.png",
+    featured: true,
+    technologies: ["Next.js", "TypeScript", "Tailwind CSS", "OpenAI", "Prisma", "PostgreSQL", "Vercel"],
+    status: "live",
+    category: "saas",
+    liveUrl: "https://wenastudio.com",
+    stats: { users: "1K+", performance: "99.9%", roi: "5x" },
+  },
+  {
     id: "saas-crm",
     name: "CRM SaaS Platform",
     description:
