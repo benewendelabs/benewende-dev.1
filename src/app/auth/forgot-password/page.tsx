@@ -12,6 +12,7 @@ export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
+  const [resetUrl, setResetUrl] = useState("");
   const [error, setError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -26,14 +27,18 @@ export default function ForgotPasswordPage() {
         body: JSON.stringify({ email }),
       });
 
-      if (res.ok) {
+      const data = await res.json();
+
+      if (res.ok && data.success) {
         setSent(true);
+        if (data.resetUrl) {
+          setResetUrl(data.resetUrl);
+        }
       } else {
-        const data = await res.json();
         setError(data.error || "Une erreur est survenue");
       }
     } catch {
-      setError("Erreur de connexion");
+      setError("Erreur de connexion au serveur");
     } finally {
       setLoading(false);
     }
@@ -78,14 +83,31 @@ export default function ForgotPasswordPage() {
                 <div className="h-16 w-16 rounded-full bg-green-500/10 flex items-center justify-center mx-auto mb-4">
                   <CheckCircle2 className="h-8 w-8 text-green-500" />
                 </div>
-                <h3 className="font-semibold mb-2">Email envoy&eacute; !</h3>
-                <p className="text-sm text-muted-foreground mb-4">
-                  Si un compte existe avec l&apos;adresse <strong>{email}</strong>,
-                  vous recevrez un lien de r&eacute;initialisation dans quelques minutes.
-                </p>
-                <p className="text-xs text-muted-foreground">
-                  V&eacute;rifiez aussi vos spams.
-                </p>
+                {resetUrl ? (
+                  <>
+                    <h3 className="font-semibold mb-2">Lien de r&eacute;initialisation</h3>
+                    <p className="text-sm text-muted-foreground mb-4">
+                      Cliquez sur le bouton ci-dessous pour r&eacute;initialiser votre mot de passe.
+                    </p>
+                    <Link href={resetUrl}>
+                      <Button className="w-full gap-2">
+                        <Mail className="h-4 w-4" />
+                        R&eacute;initialiser mon mot de passe
+                      </Button>
+                    </Link>
+                  </>
+                ) : (
+                  <>
+                    <h3 className="font-semibold mb-2">Email envoy&eacute; !</h3>
+                    <p className="text-sm text-muted-foreground mb-4">
+                      Si un compte existe avec l&apos;adresse <strong>{email}</strong>,
+                      vous recevrez un lien de r&eacute;initialisation dans quelques minutes.
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      V&eacute;rifiez aussi vos spams.
+                    </p>
+                  </>
+                )}
               </motion.div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
