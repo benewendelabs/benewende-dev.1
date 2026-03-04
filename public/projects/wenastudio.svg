@@ -1,27 +1,55 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720">
   <defs>
     <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#0f0f23"/>
-      <stop offset="50%" style="stop-color:#1a1a3e"/>
-      <stop offset="100%" style="stop-color:#0d0d2b"/>
+      <stop offset="0%" style="stop-color:#1a0e00"/>
+      <stop offset="40%" style="stop-color:#0d0804"/>
+      <stop offset="100%" style="stop-color:#0a0a0a"/>
     </linearGradient>
     <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:#6366f1"/>
-      <stop offset="100%" style="stop-color:#8b5cf6"/>
+      <stop offset="0%" style="stop-color:#f97316"/>
+      <stop offset="100%" style="stop-color:#ea580c"/>
     </linearGradient>
-    <linearGradient id="glow" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#6366f1;stop-opacity:0.3"/>
-      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:0"/>
+    <linearGradient id="glow1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f97316;stop-opacity:0.15"/>
+      <stop offset="100%" style="stop-color:#f97316;stop-opacity:0"/>
+    </linearGradient>
+    <linearGradient id="glow2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#78350f;stop-opacity:0.2"/>
+      <stop offset="100%" style="stop-color:#0a0a0a;stop-opacity:0"/>
     </linearGradient>
   </defs>
   <rect width="1280" height="720" fill="url(#bg)"/>
-  <circle cx="200" cy="150" r="300" fill="url(#glow)"/>
-  <circle cx="1100" cy="600" r="250" fill="url(#glow)"/>
-  <rect x="440" y="260" width="400" height="6" rx="3" fill="url(#accent)"/>
-  <text x="640" y="340" font-family="system-ui, -apple-system, sans-serif" font-size="72" font-weight="800" fill="white" text-anchor="middle" letter-spacing="4">WENA</text>
-  <text x="640" y="410" font-family="system-ui, -apple-system, sans-serif" font-size="56" font-weight="300" fill="#a5b4fc" text-anchor="middle" letter-spacing="12">STUDIO</text>
-  <rect x="440" y="440" width="400" height="6" rx="3" fill="url(#accent)"/>
-  <text x="640" y="500" font-family="system-ui, -apple-system, sans-serif" font-size="20" fill="#94a3b8" text-anchor="middle" letter-spacing="2">Plateforme IA tout-en-un</text>
-  <rect x="540" y="530" width="200" height="40" rx="20" fill="url(#accent)"/>
-  <text x="640" y="556" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="600" fill="white" text-anchor="middle">wenastudio.com</text>
+  <ellipse cx="640" cy="200" rx="600" ry="300" fill="url(#glow2)"/>
+  <circle cx="300" cy="100" r="200" fill="url(#glow1)"/>
+  <circle cx="980" cy="650" r="180" fill="url(#glow1)"/>
+  <!-- Nav bar -->
+  <rect x="0" y="0" width="1280" height="56" fill="#0a0a0a" opacity="0.8"/>
+  <circle cx="40" cy="28" r="14" fill="#f97316" opacity="0.8"/>
+  <text x="66" y="34" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="white">WENA Studio</text>
+  <text x="240" y="34" font-family="system-ui, sans-serif" font-size="13" fill="#888">Images</text>
+  <text x="310" y="34" font-family="system-ui, sans-serif" font-size="13" fill="#888">Videos</text>
+  <text x="380" y="34" font-family="system-ui, sans-serif" font-size="13" fill="#888">Edition</text>
+  <text x="460" y="34" font-family="system-ui, sans-serif" font-size="13" fill="#888">Chat IA</text>
+  <text x="540" y="34" font-family="system-ui, sans-serif" font-size="13" fill="#888">Agents</text>
+  <!-- Badge -->
+  <rect x="520" y="140" width="240" height="30" rx="15" fill="#1a1500" stroke="#f9731644" stroke-width="1"/>
+  <text x="640" y="161" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#f97316" text-anchor="middle" letter-spacing="2">PLATEFORME CREATIVE IA</text>
+  <!-- Title -->
+  <text x="640" y="250" font-family="system-ui, sans-serif" font-size="52" font-weight="800" fill="white" text-anchor="middle">Creez du contenu</text>
+  <text x="640" y="320" font-family="system-ui, sans-serif" font-size="52" font-weight="800" fill="#f97316" text-anchor="middle">exceptionnel</text>
+  <text x="640" y="370" font-family="system-ui, sans-serif" font-size="40" font-weight="700" fill="white" text-anchor="middle">avec l'IA</text>
+  <!-- Subtitle -->
+  <text x="640" y="420" font-family="system-ui, sans-serif" font-size="16" fill="#999" text-anchor="middle">Images, videos, audio, edition, upscale, lipsync, agents IA</text>
+  <text x="640" y="445" font-family="system-ui, sans-serif" font-size="16" fill="#999" text-anchor="middle">16 outils creatifs professionnels sur une seule plateforme.</text>
+  <!-- CTA buttons -->
+  <rect x="410" y="475" width="230" height="48" rx="24" fill="url(#accent)"/>
+  <text x="525" y="505" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="white" text-anchor="middle">Commencer gratuitement</text>
+  <rect x="660" y="475" width="200" height="48" rx="24" fill="none" stroke="#555" stroke-width="1.5"/>
+  <text x="760" y="505" font-family="system-ui, sans-serif" font-size="16" font-weight="600" fill="white" text-anchor="middle">Voir les tarifs</text>
+  <!-- Stats -->
+  <text x="440" y="570" font-family="system-ui, sans-serif" font-size="13" fill="#777" text-anchor="middle">50+ modeles IA</text>
+  <text x="580" y="570" font-family="system-ui, sans-serif" font-size="13" fill="#555" text-anchor="middle">|</text>
+  <text x="640" y="570" font-family="system-ui, sans-serif" font-size="13" fill="#777" text-anchor="middle">16 outils</text>
+  <text x="720" y="570" font-family="system-ui, sans-serif" font-size="13" fill="#555" text-anchor="middle">|</text>
+  <text x="840" y="570" font-family="system-ui, sans-serif" font-size="13" fill="#777" text-anchor="middle">Resultats en secondes</text>
 </svg>
