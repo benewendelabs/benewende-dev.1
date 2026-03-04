@@ -6,7 +6,7 @@ const globalForPrisma = globalThis as unknown as {
 
 function createPrismaClient() {
   const client = new PrismaClient({
-    log: process.env.NODE_ENV === "development" ? ["warn", "error"] : ["error"],
+    log: process.env.NODE_ENV === "development" ? ["error"] : ["error"],
   });
 
   // Middleware: auto-retry on connection errors (Neon cold start)
@@ -22,7 +22,8 @@ function createPrismaClient() {
           message.includes("Can't reach database server") ||
           message.includes("Connection timed out") ||
           message.includes("connect ETIMEDOUT") ||
-          message.includes("Connection refused");
+          message.includes("Connection refused") ||
+          message.includes("kind: Closed");
 
         if (isConnectionError && retries < MAX_RETRIES) {
           retries++;

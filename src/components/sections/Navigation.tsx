@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Moon, Sun, Globe, MessageCircle, Shield, LogOut, LogIn, CreditCard, FileType, LayoutDashboard, User } from "lucide-react";
+import { Menu, X, Moon, Sun, Globe, MessageCircle, Shield, LogOut, CreditCard, FileType, LayoutDashboard, User, Rocket } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useSession, signOut } from "next-auth/react";
 import { Button } from "@/components/ui/button";
@@ -204,14 +204,12 @@ export default function Navigation() {
                 </Button>
               </div>
             ) : (
-              feat("auth", true) && (
-                <Link href="/auth/login">
-                  <Button variant="outline" size="sm" className="gap-1.5">
-                    <LogIn className="h-3.5 w-3.5" />
-                    Connexion
-                  </Button>
-                </Link>
-              )
+              <Link href="/dashboard">
+                <Button size="sm" className="gap-1.5">
+                  <Rocket className="h-3.5 w-3.5" />
+                  Démarrer un projet
+                </Button>
+              </Link>
             )}
 
             {/* WhatsApp button for everyone */}
@@ -224,11 +222,11 @@ export default function Navigation() {
           </div>
 
           <div className="flex items-center gap-1.5 md:hidden">
-            {!isLoggedIn && feat("auth", true) && (
-              <Link href="/auth/login">
-                <Button variant="outline" size="sm" className="gap-1 text-xs h-8 px-2.5">
-                  <LogIn className="h-3 w-3" />
-                  <span className="hidden xs:inline">Connexion</span>
+            {!isLoggedIn && (
+              <Link href="/dashboard">
+                <Button size="sm" className="gap-1 text-xs h-8 px-2.5">
+                  <Rocket className="h-3 w-3" />
+                  <span className="hidden xs:inline">Projet</span>
                 </Button>
               </Link>
             )}
@@ -339,14 +337,12 @@ export default function Navigation() {
                   </Button>
                 </div>
               ) : (
-                feat("auth", true) && (
-                  <Link href="/auth/login" onClick={() => setIsMobileOpen(false)} className="block pt-3 border-t border-border mt-3">
-                    <Button variant="outline" size="sm" className="w-full gap-1.5">
-                      <LogIn className="h-3.5 w-3.5" />
-                      Connexion
-                    </Button>
-                  </Link>
-                )
+                <Link href="/dashboard" onClick={() => setIsMobileOpen(false)} className="block pt-3 border-t border-border mt-3">
+                  <Button size="sm" className="w-full gap-1.5">
+                    <Rocket className="h-3.5 w-3.5" />
+                    Démarrer un projet
+                  </Button>
+                </Link>
               )}
               <div className="flex items-center gap-2 pt-2 border-t border-border mt-2">
                 <div className="flex gap-1">

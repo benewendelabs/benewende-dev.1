@@ -79,35 +79,44 @@ export const authOptions: NextAuthOptions = {
     async signIn({ user, account }) {
       if (account?.provider === "google" || account?.provider === "github") {
         const email = user.email;
-        if (!email) return false;
+        if (!email) {
+          console.error(`[Auth] OAuth signIn failed: no email from ${account.provider}`);
+          return false;
+        }
 
-        const admin = isAdminEmail(email);
-        let dbUser = await prisma.user.findUnique({ where: { email } });
+        try {
+          const admin = isAdminEmail(email);
+          let dbUser = await prisma.user.findUnique({ where: { email } });
 
-        if (!dbUser) {
-          dbUser = await prisma.user.create({
-            data: {
-              name: user.name || email.split("@")[0],
-              email,
-              image: user.image,
-              provider: account.provider,
-              providerId: account.providerAccountId,
-              role: admin ? "admin" : "user",
-              plan: admin ? "business" : "free",
-              cvCredits: admin ? 999 : 1,
-            },
-          });
-        } else {
-          // Update provider info and ensure admin role if email is admin
-          await prisma.user.update({
-            where: { email },
-            data: {
-              provider: account.provider,
-              providerId: account.providerAccountId,
-              image: dbUser.image || user.image,
-              ...(admin && dbUser.role !== "admin" ? { role: "admin", plan: "business", cvCredits: 999 } : {}),
-            },
-          });
+          if (!dbUser) {
+            console.log(`[Auth] Creating new user via ${account.provider}: ${email} (admin: ${admin})`);
+            dbUser = await prisma.user.create({
+              data: {
+                name: user.name || email.split("@")[0],
+                email,
+                image: user.image,
+                provider: account.provider,
+                providerId: account.providerAccountId,
+                role: admin ? "admin" : "user",
+                plan: admin ? "business" : "free",
+                cvCredits: admin ? 999 : 1,
+              },
+            });
+          } else {
+            console.log(`[Auth] Existing user via ${account.provider}: ${email} (current role: ${dbUser.role})`);
+            await prisma.user.update({
+              where: { email },
+              data: {
+                provider: account.provider,
+                providerId: account.providerAccountId,
+                image: dbUser.image || user.image,
+                ...(admin && dbUser.role !== "admin" ? { role: "admin", plan: "business", cvCredits: 999 } : {}),
+              },
+            });
+          }
+        } catch (error) {
+          console.error(`[Auth] OAuth signIn DB error for ${email}:`, error);
+          return false;
         }
       }
       return true;
@@ -140,7 +149,9 @@ export const authOptions: NextAuthOptions = {
   },
   pages: {
     signIn: "/auth/login",
+    error: "/auth/login",
   },
+  debug: process.env.NODE_ENV === "development",
   cookies: {
     pkceCodeVerifier: {
       name: "next-auth.pkce.code_verifier",

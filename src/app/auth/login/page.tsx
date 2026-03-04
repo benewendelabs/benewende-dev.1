@@ -14,10 +14,18 @@ function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
+  const authError = searchParams.get("error");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(() => {
+    if (authError === "OAuthAccountNotLinked") return "Ce compte est déjà lié à une autre méthode de connexion.";
+    if (authError === "OAuthCallback") return "Erreur de connexion OAuth. Vérifiez la configuration du provider.";
+    if (authError === "OAuthCreateAccount") return "Impossible de créer le compte via OAuth.";
+    if (authError === "AccessDenied") return "Accès refusé.";
+    if (authError) return `Erreur d'authentification: ${authError}`;
+    return "";
+  });
   const [loading, setLoading] = useState(false);
   const [socialLoading, setSocialLoading] = useState<string | null>(null);
 
