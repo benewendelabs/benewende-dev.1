@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f5f0eb"/>
+      <stop offset="100%" style="stop-color:#ede4da"/>
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="1280" height="720" fill="url(#bg)"/>
+  <!-- Top announcement bar -->
+  <rect width="1280" height="36" fill="#1a1a1a"/>
+  <text x="640" y="24" font-family="system-ui, sans-serif" font-size="11" fill="white" text-anchor="middle" letter-spacing="3">LIVRAISON GRATUITE A OUAGADOUGOU  •  EXPEDITION AFRIQUE DE L'OUEST</text>
+  <!-- Header -->
+  <rect y="36" width="1280" height="60" fill="white"/>
+  <rect x="30" y="54" width="22" height="2" fill="#333"/>
+  <rect x="30" y="60" width="22" height="2" fill="#333"/>
+  <rect x="30" y="66" width="22" height="2" fill="#333"/>
+  <text x="640" y="65" font-family="Georgia, serif" font-size="32" font-weight="400" fill="#1a1a1a" text-anchor="middle" letter-spacing="8">JEMABI</text>
+  <text x="640" y="82" font-family="system-ui, sans-serif" font-size="10" fill="#999" text-anchor="middle" letter-spacing="4">MARKETPLACE</text>
+  <text x="1100" y="70" font-family="system-ui, sans-serif" font-size="13" fill="#666">XOF</text>
+  <!-- Hero image area -->
+  <rect x="0" y="96" width="1280" height="480" fill="#d4c5b0" opacity="0.4"/>
+  <!-- Clothes rack suggestion -->
+  <rect x="300" y="130" width="680" height="8" rx="4" fill="#a08060" opacity="0.3"/>
+  <rect x="400" y="138" width="60" height="280" rx="4" fill="#e8ddd0" opacity="0.5"/>
+  <rect x="500" y="138" width="55" height="300" rx="4" fill="#f0e6d8" opacity="0.5"/>
+  <rect x="600" y="138" width="50" height="260" rx="4" fill="#ddd0c0" opacity="0.5"/>
+  <rect x="700" y="138" width="65" height="290" rx="4" fill="#e5d8c8" opacity="0.5"/>
+  <rect x="800" y="138" width="55" height="270" rx="4" fill="#f2ece4" opacity="0.5"/>
+  <!-- Badge -->
+  <rect x="510" y="200" width="260" height="36" rx="4" fill="none" stroke="#c9a96e" stroke-width="1.5"/>
+  <text x="640" y="224" font-family="system-ui, sans-serif" font-size="14" fill="#c9a96e" text-anchor="middle" letter-spacing="2">Excellence Africaine</text>
+  <!-- Main title -->
+  <text x="640" y="310" font-family="Georgia, serif" font-size="72" fill="white" text-anchor="middle" font-weight="400">Marques</text>
+  <text x="640" y="380" font-family="Georgia, serif" font-size="64" fill="#c9a96e" text-anchor="middle" font-style="italic" font-weight="400">Curated</text>
+  <!-- CTA button -->
+  <rect x="480" y="415" width="320" height="52" rx="4" fill="white"/>
+  <text x="610" y="447" font-family="system-ui, sans-serif" font-size="16" fill="#1a1a1a" text-anchor="middle" font-weight="500">Voir les marques</text>
+  <text x="750" y="447" font-family="system-ui, sans-serif" font-size="18" fill="#1a1a1a">→</text>
+  <!-- Carousel dots -->
+  <circle cx="600" cy="540" r="5" fill="white" opacity="0.5"/>
+  <circle cx="622" cy="540" r="5" fill="white" opacity="0.5"/>
+  <rect x="636" y="535" width="28" height="10" rx="5" fill="white" opacity="0.9"/>
+  <!-- Arrows -->
+  <circle cx="50" cy="340" r="22" fill="white" opacity="0.5"/>
+  <text x="50" y="346" font-family="system-ui, sans-serif" font-size="20" fill="#666" text-anchor="middle">&lt;</text>
+  <circle cx="1230" cy="340" r="22" fill="white" opacity="0.5"/>
+  <text x="1230" y="346" font-family="system-ui, sans-serif" font-size="20" fill="#666" text-anchor="middle">&gt;</text>
+  <!-- Bottom nav -->
+  <rect x="0" y="576" width="1280" height="144" fill="white"/>
+  <rect x="0" y="576" width="1280" height="1" fill="#e5e7eb"/>
+  <text x="130" y="640" font-family="system-ui, sans-serif" font-size="12" fill="#666" text-anchor="middle">Accueil</text>
+  <text x="350" y="640" font-family="system-ui, sans-serif" font-size="12" fill="#999" text-anchor="middle">Rechercher</text>
+  <text x="570" y="640" font-family="system-ui, sans-serif" font-size="12" fill="#999" text-anchor="middle">Marques</text>
+  <text x="790" y="640" font-family="system-ui, sans-serif" font-size="12" fill="#999" text-anchor="middle">Wishlist</text>
+  <text x="1010" y="640" font-family="system-ui, sans-serif" font-size="12" fill="#999" text-anchor="middle">Mon compte</text>
+</svg>

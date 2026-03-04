@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720">
+  <defs>
+    <linearGradient id="topbar" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#f5c518"/>
+      <stop offset="100%" style="stop-color:#fbbf24"/>
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="1280" height="720" fill="#faf9f6"/>
+  <!-- Top bar -->
+  <rect width="1280" height="50" fill="#1a1a1a"/>
+  <circle cx="30" cy="25" r="6" fill="#10b981"/>
+  <text x="50" y="30" font-family="system-ui, sans-serif" font-size="13" fill="#ccc">Livrer a</text>
+  <text x="50" y="44" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="white">Selectionner une adresse</text>
+  <!-- Search bar -->
+  <rect x="40" y="65" width="1200" height="44" rx="22" fill="white" stroke="#e5e7eb" stroke-width="1.5"/>
+  <text x="80" y="92" font-family="system-ui, sans-serif" font-size="15" fill="#999">Rechercher un commerce ou produit...</text>
+  <!-- Banner -->
+  <rect x="40" y="125" width="1200" height="120" rx="16" fill="url(#topbar)"/>
+  <text x="70" y="170" font-family="system-ui, sans-serif" font-size="24" font-weight="800" fill="#1a1a1a">Epicerie Express</text>
+  <text x="70" y="200" font-family="system-ui, sans-serif" font-size="16" fill="#444">Livree en 30 min</text>
+  <rect x="1100" y="135" width="120" height="100" rx="12" fill="#4ade80" opacity="0.3"/>
+  <!-- Categories title -->
+  <text x="40" y="290" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#1a1a1a">Parcourir les categories</text>
+  <!-- Category icons row 1 -->
+  <circle cx="130" cy="345" r="36" fill="#fee2e2"/>
+  <text x="130" y="350" font-family="system-ui, sans-serif" font-size="28" text-anchor="middle">🍔</text>
+  <text x="130" y="400" font-family="system-ui, sans-serif" font-size="12" fill="#555" text-anchor="middle">Restaurants</text>
+  <circle cx="350" cy="345" r="36" fill="#d1fae5"/>
+  <text x="350" y="350" font-family="system-ui, sans-serif" font-size="28" text-anchor="middle">🛒</text>
+  <text x="350" y="400" font-family="system-ui, sans-serif" font-size="12" fill="#555" text-anchor="middle">Epicerie</text>
+  <circle cx="570" cy="345" r="36" fill="#fef3c7"/>
+  <text x="570" y="350" font-family="system-ui, sans-serif" font-size="28" text-anchor="middle">💊</text>
+  <text x="570" y="400" font-family="system-ui, sans-serif" font-size="12" fill="#555" text-anchor="middle">Pharmacie</text>
+  <circle cx="790" cy="345" r="36" fill="#e0f2fe"/>
+  <text x="790" y="350" font-family="system-ui, sans-serif" font-size="28" text-anchor="middle">👗</text>
+  <text x="790" y="400" font-family="system-ui, sans-serif" font-size="12" fill="#555" text-anchor="middle">Mode</text>
+  <!-- Category row 2 -->
+  <circle cx="130" cy="465" r="36" fill="#f3e8ff"/>
+  <text x="130" y="470" font-family="system-ui, sans-serif" font-size="28" text-anchor="middle">📱</text>
+  <text x="130" y="520" font-family="system-ui, sans-serif" font-size="12" fill="#555" text-anchor="middle">Electronique</text>
+  <circle cx="350" cy="465" r="36" fill="#fce7f3"/>
+  <text x="350" y="470" font-family="system-ui, sans-serif" font-size="28" text-anchor="middle">💄</text>
+  <text x="350" y="520" font-family="system-ui, sans-serif" font-size="12" fill="#555" text-anchor="middle">Beaute</text>
+  <circle cx="570" cy="465" r="36" fill="#fef9c3"/>
+  <text x="570" y="470" font-family="system-ui, sans-serif" font-size="28" text-anchor="middle">💐</text>
+  <text x="570" y="520" font-family="system-ui, sans-serif" font-size="12" fill="#555" text-anchor="middle">Fleurs</text>
+  <circle cx="790" cy="465" r="36" fill="#fff7ed"/>
+  <text x="790" y="470" font-family="system-ui, sans-serif" font-size="28" text-anchor="middle">🥐</text>
+  <text x="790" y="520" font-family="system-ui, sans-serif" font-size="12" fill="#555" text-anchor="middle">Boulangerie</text>
+  <!-- Bottom section -->
+  <text x="40" y="580" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#1a1a1a">Les meilleurs pres de vous</text>
+  <text x="1180" y="580" font-family="system-ui, sans-serif" font-size="14" fill="#10b981" text-anchor="end">Voir tout</text>
+  <!-- Product cards -->
+  <rect x="40" y="600" width="180" height="110" rx="12" fill="#f97316" opacity="0.15"/>
+  <rect x="240" y="600" width="180" height="110" rx="12" fill="#ef4444" opacity="0.15"/>
+  <rect x="440" y="600" width="180" height="110" rx="12" fill="#8b5cf6" opacity="0.15"/>
+  <rect x="640" y="600" width="180" height="110" rx="12" fill="#06b6d4" opacity="0.15"/>
+  <!-- Discount badges -->
+  <rect x="50" y="610" width="50" height="22" rx="4" fill="#ef4444"/>
+  <text x="75" y="626" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="white" text-anchor="middle">-20%</text>
+  <rect x="250" y="610" width="50" height="22" rx="4" fill="#ef4444"/>
+  <text x="275" y="626" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="white" text-anchor="middle">-20%</text>
+  <!-- Bottom nav -->
+  <rect x="0" y="680" width="1280" height="40" fill="white"/>
+  <text x="320" y="705" font-family="system-ui, sans-serif" font-size="12" fill="#10b981" text-anchor="middle" font-weight="700">Accueil</text>
+  <text x="530" y="705" font-family="system-ui, sans-serif" font-size="12" fill="#999" text-anchor="middle">Explorer</text>
+  <text x="740" y="705" font-family="system-ui, sans-serif" font-size="12" fill="#999" text-anchor="middle">Livrer</text>
+  <text x="950" y="705" font-family="system-ui, sans-serif" font-size="12" fill="#999" text-anchor="middle">Profil</text>
+</svg>

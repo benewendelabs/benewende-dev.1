@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720">
+  <defs>
+    <linearGradient id="topgrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#dc2626"/>
+      <stop offset="30%" style="stop-color:#f97316"/>
+      <stop offset="60%" style="stop-color:#eab308"/>
+      <stop offset="100%" style="stop-color:#16a34a"/>
+    </linearGradient>
+    <linearGradient id="greenbar" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#16a34a"/>
+      <stop offset="100%" style="stop-color:#22c55e"/>
+    </linearGradient>
+    <linearGradient id="redbtn" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#dc2626"/>
+      <stop offset="100%" style="stop-color:#b91c1c"/>
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="1280" height="720" fill="#f5f5f0"/>
+  <!-- Top gradient bar -->
+  <rect width="1280" height="8" fill="url(#topgrad)"/>
+  <!-- Header -->
+  <rect y="8" width="1280" height="65" fill="white"/>
+  <circle cx="55" cy="40" r="22" fill="#dc2626"/>
+  <text x="55" y="36" font-family="system-ui, sans-serif" font-size="10" fill="white" text-anchor="middle" font-weight="700">air</text>
+  <text x="55" y="50" font-family="system-ui, sans-serif" font-size="9" fill="white" text-anchor="middle">burkina</text>
+  <!-- Hero image area -->
+  <rect x="0" y="73" width="1280" height="350" fill="#87CEEB" opacity="0.3"/>
+  <rect x="0" y="73" width="1280" height="350" fill="#e8d5b7" opacity="0.4"/>
+  <!-- Airport scene elements -->
+  <rect x="200" y="200" width="880" height="180" rx="4" fill="#2563eb" opacity="0.08"/>
+  <!-- Carousel dots -->
+  <circle cx="590" cy="390" r="6" fill="white" opacity="0.7"/>
+  <circle cx="612" cy="390" r="6" fill="white" opacity="0.7"/>
+  <rect x="628" y="384" width="30" height="12" rx="6" fill="white"/>
+  <!-- Arrows -->
+  <circle cx="50" cy="250" r="22" fill="white" opacity="0.6"/>
+  <text x="50" y="256" font-family="system-ui, sans-serif" font-size="20" fill="#666" text-anchor="middle">&lt;</text>
+  <circle cx="1230" cy="250" r="22" fill="white" opacity="0.6"/>
+  <text x="1230" y="256" font-family="system-ui, sans-serif" font-size="20" fill="#666" text-anchor="middle">&gt;</text>
+  <!-- Green booking bar -->
+  <rect x="40" y="430" width="1200" height="120" rx="16" fill="url(#greenbar)"/>
+  <text x="80" y="470" font-family="system-ui, sans-serif" font-size="12" fill="white" letter-spacing="1" font-weight="600">✈  RESERVEZ VOTRE VOL</text>
+  <text x="310" y="470" font-family="system-ui, sans-serif" font-size="12" fill="#bbf7d0" letter-spacing="1">AVEC AIR BURKINA</text>
+  <!-- Form fields -->
+  <text x="80" y="500" font-family="system-ui, sans-serif" font-size="10" fill="#bbf7d0" letter-spacing="1">DEPART</text>
+  <text x="80" y="520" font-family="system-ui, sans-serif" font-size="15" fill="white">Ville de depart</text>
+  <rect x="80" y="528" width="300" height="1" fill="white" opacity="0.3"/>
+  <text x="470" y="510" font-family="system-ui, sans-serif" font-size="22" fill="white" font-weight="300">Vers</text>
+  <text x="560" y="500" font-family="system-ui, sans-serif" font-size="10" fill="#bbf7d0" letter-spacing="1">DESTINATION</text>
+  <text x="560" y="520" font-family="system-ui, sans-serif" font-size="15" fill="white">Ville de destination</text>
+  <rect x="560" y="528" width="300" height="1" fill="white" opacity="0.3"/>
+  <!-- Search button -->
+  <rect x="950" y="490" width="160" height="45" rx="8" fill="url(#redbtn)"/>
+  <text x="1030" y="518" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="white" text-anchor="middle">Rechercher</text>
+  <!-- Bottom nav -->
+  <rect x="40" y="570" width="1200" height="50" rx="8" fill="#1a1a1a"/>
+  <text x="130" y="600" font-family="system-ui, sans-serif" font-size="12" fill="#ccc" text-anchor="middle">CARTE CELESTARS</text>
+  <text x="330" y="600" font-family="system-ui, sans-serif" font-size="12" fill="#ccc" text-anchor="middle">BAGAGES</text>
+  <text x="530" y="600" font-family="system-ui, sans-serif" font-size="12" fill="#ccc" text-anchor="middle">MA RESERVATION</text>
+  <text x="760" y="600" font-family="system-ui, sans-serif" font-size="12" fill="#ccc" text-anchor="middle">HORAIRES DES VOLS</text>
+  <text x="990" y="600" font-family="system-ui, sans-serif" font-size="12" fill="#ccc" text-anchor="middle">NOUS CONTACTER</text>
+  <!-- Offres section -->
+  <text x="640" y="665" font-family="system-ui, sans-serif" font-size="16" fill="#16a34a" text-anchor="middle" font-weight="700" letter-spacing="2">OFFRES SPECIALES</text>
+</svg>
