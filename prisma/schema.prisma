@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,21 +8,20 @@ datasource db {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String
-  email         String    @unique
-  password      String?   // null for OAuth users
-  role          String    @default("user") // "admin" | "user"
-  image         String?
-  cvCredits     Int       @default(1) // free = 1 CV
-  plan          String    @default("free") // "free" | "pro" | "business"
-  provider      String?   // "google" | "github" | "credentials"
-  providerId    String?   // OAuth provider user ID
-  resetToken    String?   @unique
-  resetExpires  DateTime?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-
+  id             String          @id @default(cuid())
+  email          String          @unique
+  name           String
+  image          String?
+  password       String?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  cvCredits      Int             @default(1)
+  plan           String          @default("free")
+  role           String          @default("user")
+  provider       String?
+  providerId     String?
+  resetExpires   DateTime?
+  resetToken     String?         @unique
   cvDocuments    CVDocument[]
   clientProjects ClientProject[]
 }
@@ -43,14 +39,14 @@ model ContactMessage {
 }
 
 model CVDocument {
-  id         String   @id @default(cuid())
-  userId     String
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  title      String
-  data       String   // JSON stringified CVData
-  template   String   @default("modern")
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id        String   @id @default(cuid())
+  userId    String
+  title     String
+  data      String
+  template  String   @default("modern")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Project {
@@ -59,11 +55,9 @@ model Project {
   description     String
   longDescription String?
   image           String   @default("/projects/placeholder.png")
-  demoVideo       String?  // URL to demo video (MP4/WebM)
-  featured        Boolean  @default(false)
-  technologies    String   // JSON array
-  status          String   @default("live") // "live" | "in-progress" | "prototype"
-  category        String   @default("webapp") // "saas" | "webapp" | "mobile" | "ia" | "prototype"
+  technologies    String
+  status          String   @default("live")
+  category        String   @default("webapp")
   progress        Int?
   launchDate      String?
   liveUrl         String?
@@ -75,17 +69,19 @@ model Project {
   visible         Boolean  @default(true)
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
+  demoVideo       String?
+  featured        Boolean  @default(false)
 }
 
 model ServiceItem {
   id          String   @id @default(cuid())
-  icon        String   @default("Rocket") // lucide icon name
+  icon        String   @default("Rocket")
   title       String
   description String
   priceXOF    String
   priceEUR    String
   priceUSD    String
-  features    String   // JSON array
+  features    String
   sortOrder   Int      @default(0)
   visible     Boolean  @default(true)
   createdAt   DateTime @default(now())
@@ -95,7 +91,7 @@ model ServiceItem {
 model SkillGroup {
   id        String   @id @default(cuid())
   category  String
-  skills    String   // JSON: [{name, level, label}]
+  skills    String
   sortOrder Int      @default(0)
   visible   Boolean  @default(true)
   updatedAt DateTime @updatedAt
@@ -120,7 +116,7 @@ model ExperienceItem {
   title        String
   company      String
   description  String
-  achievements String   // JSON array
+  achievements String
   current      Boolean  @default(false)
   sortOrder    Int      @default(0)
   visible      Boolean  @default(true)
@@ -128,78 +124,75 @@ model ExperienceItem {
 }
 
 model Payment {
-  id              String   @id @default(cuid())
-  userId          String
-  transactionId   String   @unique // CinetPay transaction ID
-  amount          Int      // Amount in XOF
-  currency        String   @default("XOF")
-  description     String
-  paymentMethod   String?  // "MOBILE_MONEY", "CREDIT_CARD", "WALLET"
-  operator        String?  // "ORANGE_CI", "MTN_CI", "MOOV_BF", "ORANGE_BF", "WAVE", etc.
-  status          String   @default("PENDING") // "PENDING" | "ACCEPTED" | "REFUSED" | "CANCELLED"
-  cinetpayData    String?  // JSON - full CinetPay response
-  plan            String?  // "pro" | "business"
-  serviceType     String?  // "cv-generator" | "service"
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id            String   @id @default(cuid())
+  userId        String
+  amount        Int
+  currency      String   @default("XOF")
+  description   String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  cinetpayData  String?
+  operator      String?
+  paymentMethod String?
+  plan          String?
+  serviceType   String?
+  transactionId String   @unique
+  status        String   @default("PENDING")
 }
 
 model SiteSetting {
   id    String @id
-  value String // JSON
+  value String
 }
 
-// ── Client Portal ──────────────────────────────────────────
-
 model ClientProject {
-  id          String   @id @default(cuid())
+  id          String             @id @default(cuid())
   userId      String
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   name        String
   description String
-  status      String   @default("discovery") // discovery | design | development | testing | review | delivered | maintenance
-  priority    String   @default("normal")    // low | normal | high | urgent
-  progress    Int      @default(0)           // 0-100
+  status      String             @default("discovery")
+  priority    String             @default("normal")
+  progress    Int                @default(0)
   budget      String?
-  currency    String   @default("XOF")
-  startDate   DateTime @default(now())
+  currency    String             @default("XOF")
+  startDate   DateTime           @default(now())
   deadline    DateTime?
   completedAt DateTime?
-  techStack   String?  // JSON array
+  techStack   String?
   repoUrl     String?
   liveUrl     String?
-  visible     Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
+  visible     Boolean            @default(true)
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+  user        User               @relation(fields: [userId], references: [id], onDelete: Cascade)
   milestones  ProjectMilestone[]
   updates     ProjectUpdate[]
 }
 
 model ProjectMilestone {
-  id              String   @id @default(cuid())
+  id              String        @id @default(cuid())
   clientProjectId String
-  clientProject   ClientProject @relation(fields: [clientProjectId], references: [id], onDelete: Cascade)
   title           String
   description     String?
-  status          String   @default("pending") // pending | in_progress | completed | blocked
+  status          String        @default("pending")
   dueDate         DateTime?
   completedAt     DateTime?
-  sortOrder       Int      @default(0)
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  sortOrder       Int           @default(0)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  clientProject   ClientProject @relation(fields: [clientProjectId], references: [id], onDelete: Cascade)
 }
 
 model ProjectUpdate {
-  id              String   @id @default(cuid())
+  id              String        @id @default(cuid())
   clientProjectId String
-  clientProject   ClientProject @relation(fields: [clientProjectId], references: [id], onDelete: Cascade)
-  authorRole      String   @default("admin") // admin | client
+  authorRole      String        @default("admin")
   authorName      String
   title           String
   content         String
-  type            String   @default("update") // update | milestone | delivery | feedback | invoice
+  type            String        @default("update")
   attachmentUrl   String?
   attachmentName  String?
-  createdAt       DateTime @default(now())
+  createdAt       DateTime      @default(now())
+  clientProject   ClientProject @relation(fields: [clientProjectId], references: [id], onDelete: Cascade)
 }

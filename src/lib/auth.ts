@@ -5,6 +5,12 @@ import GitHubProvider from "next-auth/providers/github";
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
 
+const ADMIN_EMAILS = (process.env.ADMIN_EMAILS || "benewende.dev@gmail.com,benewendebrandstudios@gmail.com").split(",").map(e => e.trim().toLowerCase());
+
+function isAdminEmail(email: string): boolean {
+  return ADMIN_EMAILS.includes(email.toLowerCase());
+}
+
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
@@ -75,6 +81,7 @@ export const authOptions: NextAuthOptions = {
         const email = user.email;
         if (!email) return false;
 
+        const admin = isAdminEmail(email);
         let dbUser = await prisma.user.findUnique({ where: { email } });
 
         if (!dbUser) {
@@ -85,18 +92,20 @@ export const authOptions: NextAuthOptions = {
               image: user.image,
               provider: account.provider,
               providerId: account.providerAccountId,
-              role: "user",
-              plan: "free",
-              cvCredits: 1,
+              role: admin ? "admin" : "user",
+              plan: admin ? "business" : "free",
+              cvCredits: admin ? 999 : 1,
             },
           });
-        } else if (!dbUser.provider) {
+        } else {
+          // Update provider info and ensure admin role if email is admin
           await prisma.user.update({
             where: { email },
             data: {
               provider: account.provider,
               providerId: account.providerAccountId,
               image: dbUser.image || user.image,
+              ...(admin && dbUser.role !== "admin" ? { role: "admin", plan: "business", cvCredits: 999 } : {}),
             },
           });
         }
