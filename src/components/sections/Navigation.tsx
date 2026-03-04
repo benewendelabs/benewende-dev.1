@@ -98,14 +98,14 @@ export default function Navigation() {
                 {link.label}
               </a>
             ))}
-            {feat("cvGenerator", true) && (
+            {isLoggedIn && feat("cvGenerator", true) && (
               <Link href="/cv-generator">
                 <Button size="sm" className="ml-2">
                   CV Generator
                 </Button>
               </Link>
             )}
-            {feat("card", true) && (
+            {isLoggedIn && feat("card", true) && (
               <Link href="/card">
                 <Button variant="outline" size="sm" className="gap-1.5">
                   <CreditCard className="h-3.5 w-3.5" />
@@ -113,7 +113,7 @@ export default function Navigation() {
                 </Button>
               </Link>
             )}
-            {feat("converter", true) && (
+            {isLoggedIn && feat("converter", true) && (
               <Link href="/converter">
                 <Button variant="outline" size="sm" className="gap-1.5">
                   <FileType className="h-3.5 w-3.5" />
@@ -266,7 +266,7 @@ export default function Navigation() {
                   {link.label}
                 </a>
               ))}
-              {feat("cvGenerator", true) && (
+              {isLoggedIn && feat("cvGenerator", true) && (
                 <Link
                   href="/cv-generator"
                   onClick={() => setIsMobileOpen(false)}
@@ -276,7 +276,7 @@ export default function Navigation() {
                   </Button>
                 </Link>
               )}
-              {feat("card", true) && (
+              {isLoggedIn && feat("card", true) && (
                 <Link
                   href="/card"
                   onClick={() => setIsMobileOpen(false)}
@@ -287,7 +287,7 @@ export default function Navigation() {
                   </Button>
                 </Link>
               )}
-              {feat("converter", true) && (
+              {isLoggedIn && feat("converter", true) && (
                 <Link
                   href="/converter"
                   onClick={() => setIsMobileOpen(false)}

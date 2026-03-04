@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowDown, CreditCard, FileText, Rocket } from "lucide-react";
+import { ArrowDown, MessageCircle, Rocket } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
@@ -26,27 +26,19 @@ interface HeroSettings {
   available?: boolean;
 }
 
-interface FeatureToggles {
-  cvGenerator?: boolean;
-  converter?: boolean;
-  card?: boolean;
-}
+const whatsappUrl = `https://wa.me/22607267119?text=${encodeURIComponent("Bonjour, je suis intéressé par vos services de développement.")}`;
 
 export default function Hero() {
   const [currentText, setCurrentText] = useState(0);
   const [displayedText, setDisplayedText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
   const [heroSettings, setHeroSettings] = useState<HeroSettings>({});
-  const [features, setFeatures] = useState<FeatureToggles>({});
-
-  const feat = (key: keyof FeatureToggles, def: boolean) => features[key] !== undefined ? !!features[key] : def;
 
   useEffect(() => {
     fetch("/api/content/settings")
       .then((res) => (res.ok ? res.json() : null))
       .then((data) => {
         if (data?.hero) setHeroSettings(data.hero);
-        if (data?.features) setFeatures(data.features as FeatureToggles);
       })
       .catch(() => {});
   }, []);
@@ -132,36 +124,23 @@ export default function Hero() {
           transition={{ delay: 0.7, duration: 0.6 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16"
         >
-          <a href="#projets">
+          <Link href="/dashboard">
             <Button size="lg" className="gap-2 text-base px-8">
               <Rocket className="h-5 w-5" />
+              Démarrer un projet
+            </Button>
+          </Link>
+          <a href="#projets">
+            <Button size="lg" variant="outline" className="gap-2 text-base px-8">
               Voir mes projets
             </Button>
           </a>
-          {feat("cvGenerator", true) && (
-            <Link href="/cv-generator">
-              <Button
-                size="lg"
-                variant="outline"
-                className="gap-2 text-base px-8"
-              >
-                <FileText className="h-5 w-5" />
-                Générer mon CV
-              </Button>
-            </Link>
-          )}
-          {feat("card", true) && (
-            <Link href="/card">
-              <Button
-                size="lg"
-                variant="outline"
-                className="gap-2 text-base px-8"
-              >
-                <CreditCard className="h-5 w-5" />
-                Ma Carte
-              </Button>
-            </Link>
-          )}
+          <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
+            <Button size="lg" variant="outline" className="gap-2 text-base px-8 text-[#25D366] border-[#25D366] hover:bg-[#25D366]/10">
+              <MessageCircle className="h-5 w-5" />
+              WhatsApp
+            </Button>
+          </a>
         </motion.div>
 
         <motion.div
