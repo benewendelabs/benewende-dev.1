@@ -145,6 +145,15 @@ model SiteSetting {
   value String
 }
 
+model Upload {
+  id        String   @id @default(cuid())
+  filename  String
+  mimeType  String
+  size      Int
+  data      Bytes
+  createdAt DateTime @default(now())
+}
+
 model ClientProject {
   id          String             @id @default(cuid())
   userId      String

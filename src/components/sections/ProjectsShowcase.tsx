@@ -46,7 +46,7 @@ const statusConfig: Record<
 
 function isImageUrl(url: string): boolean {
   if (!url) return false;
-  if (url.startsWith("/uploads/") || url.startsWith("/projects/")) return true;
+  if (url.startsWith("/uploads/") || url.startsWith("/projects/") || url.startsWith("/api/uploads/")) return true;
   if (/\.(jpg|jpeg|png|gif|webp|svg|avif|bmp)(\?.*)?$/i.test(url)) return true;
   if (url.includes("imgur") || url.includes("cloudinary") || url.includes("unsplash") || url.includes("supabase")) return true;
   if (url.startsWith("https://")) return true;
@@ -55,7 +55,7 @@ function isImageUrl(url: string): boolean {
 
 function ProjectMedia({ project, className }: { project: Project; className?: string }) {
   const [imgError, setImgError] = useState(false);
-  const hasVideo = project.demoVideo && /\.(mp4|webm)(\?.*)?$/i.test(project.demoVideo);
+  const hasVideo = project.demoVideo && (/\.(mp4|webm)(\?.*)?$/i.test(project.demoVideo) || project.demoVideo.startsWith("/api/uploads/"));
   const hasValidImage = project.image && project.image !== "/projects/placeholder.png" && isImageUrl(project.image) && !imgError;
 
   if (hasVideo) {

@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
-import { writeFile, mkdir } from "fs/promises";
-import path from "path";
-import crypto from "crypto";
+import { prisma } from "@/lib/prisma";
 
 const IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif", "image/svg+xml"];
 const VIDEO_TYPES = ["video/mp4", "video/webm"];
@@ -42,16 +40,17 @@ export async function POST(request: NextRequest) {
     }
 
     const buffer = Buffer.from(await file.arrayBuffer());
-    const ext = file.name.split(".").pop()?.toLowerCase() || "png";
-    const uniqueName = `${crypto.randomBytes(8).toString("hex")}-${Date.now()}.${ext}`;
 
-    const uploadDir = path.join(process.cwd(), "public", "uploads");
-    await mkdir(uploadDir, { recursive: true });
+    const upload = await prisma.upload.create({
+      data: {
+        filename: file.name,
+        mimeType: file.type,
+        size: file.size,
+        data: buffer,
+      },
+    });
 
-    const filePath = path.join(uploadDir, uniqueName);
-    await writeFile(filePath, buffer);
-
-    const url = `/uploads/${uniqueName}`;
+    const url = `/api/uploads/${upload.id}`;
 
     return NextResponse.json({ url, name: file.name, size: file.size });
   } catch (error) {
