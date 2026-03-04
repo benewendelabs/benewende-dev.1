@@ -48,7 +48,8 @@ function isImageUrl(url: string): boolean {
   if (!url) return false;
   if (url.startsWith("/uploads/") || url.startsWith("/projects/")) return true;
   if (/\.(jpg|jpeg|png|gif|webp|svg|avif|bmp)(\?.*)?$/i.test(url)) return true;
-  if (url.includes("imgur") || url.includes("cloudinary") || url.includes("unsplash")) return true;
+  if (url.includes("imgur") || url.includes("cloudinary") || url.includes("unsplash") || url.includes("supabase")) return true;
+  if (url.startsWith("https://")) return true;
   return false;
 }
 
