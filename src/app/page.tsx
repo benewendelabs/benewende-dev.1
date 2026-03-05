@@ -2,7 +2,6 @@
 
 import Navigation from "@/components/sections/Navigation";
 import Hero from "@/components/sections/Hero";
-import Services from "@/components/sections/Services";
 import Pricing from "@/components/sections/Pricing";
 import ProjectsShowcase from "@/components/sections/ProjectsShowcase";
 import Skills from "@/components/sections/Skills";
@@ -18,7 +17,6 @@ export default function Home() {
       <Navigation />
       <main>
         <Hero />
-        <Services />
         <Pricing />
         <ProjectsShowcase />
         <Skills />
