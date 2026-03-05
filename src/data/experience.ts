@@ -15,9 +15,9 @@ export const experiences: Experience[] = [
     description:
       "Développement de produits SaaS et accompagnement clients sur des projets web ambitieux.",
     achievements: [
-      "Développement de 5+ SaaS en production",
-      "Accompagnement de 20+ clients",
-      "95% de satisfaction client",
+      "3 SaaS déployés en production",
+      "10+ clients accompagnés",
+      "98% de satisfaction client",
     ],
     current: true,
   },
@@ -28,9 +28,9 @@ export const experiences: Experience[] = [
     description:
       "Lead technique sur des projets d'envergure avec une équipe de développeurs.",
     achievements: [
-      "Architecture de plateformes à fort trafic",
-      "Lead technique équipe de 4 développeurs",
-      "Réduction temps de chargement de 60%",
+      "Architecture de 5 plateformes à fort trafic",
+      "Lead technique d'une équipe de 3 développeurs",
+      "Réduction temps de chargement de 40%",
     ],
   },
   {
@@ -40,9 +40,9 @@ export const experiences: Experience[] = [
     description:
       "Développement d'applications web et mobiles pour divers clients B2B.",
     achievements: [
-      "Stack React / Node.js",
-      "15+ projets livrés",
-      "Développement de features clés",
+      "Stack React / Node.js / Next.js",
+      "10+ projets livrés pour clients B2B",
+      "Intégration API et paiements mobile money",
     ],
   },
 ];

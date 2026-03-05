@@ -14,9 +14,9 @@ const defaultTypingTexts = [
 ];
 
 const stats = [
-  { value: "12+", label: "Projets livrés" },
-  { value: "50K+", label: "Lignes de code" },
-  { value: "95%", label: "Satisfaction clients" },
+  { value: "25+", label: "Projets livrés" },
+  { value: "3+", label: "Années d'expérience" },
+  { value: "98%", label: "Satisfaction clients" },
 ];
 
 interface HeroSettings {
