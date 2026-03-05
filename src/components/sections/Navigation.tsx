@@ -65,7 +65,7 @@ export default function Navigation() {
   }, []);
 
   const currencies: Currency[] = ["XOF", "EUR", "USD"];
-  const whatsappUrl = whatsapp ? `https://wa.me/${whatsapp.replace(/\D/g, "")}` : "https://wa.me/22607267119";
+  const whatsappUrl = whatsapp ? `https://wa.me/${whatsapp.replace(/\D/g, "")}` : "https://wa.me/2250708454592";
 
   return (
     <motion.header

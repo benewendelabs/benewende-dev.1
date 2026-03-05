@@ -26,19 +26,21 @@ interface HeroSettings {
   available?: boolean;
 }
 
-const whatsappUrl = `https://wa.me/22607267119?text=${encodeURIComponent("Bonjour, je suis intéressé par vos services de développement.")}`;
+const DEFAULT_WHATSAPP = "2250708454592";
 
 export default function Hero() {
   const [currentText, setCurrentText] = useState(0);
   const [displayedText, setDisplayedText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
   const [heroSettings, setHeroSettings] = useState<HeroSettings>({});
+  const [whatsappNum, setWhatsappNum] = useState(DEFAULT_WHATSAPP);
 
   useEffect(() => {
     fetch("/api/content/settings")
       .then((res) => (res.ok ? res.json() : null))
       .then((data) => {
         if (data?.hero) setHeroSettings(data.hero);
+        if (data?.site?.whatsapp) setWhatsappNum((data.site.whatsapp as string).replace(/\D/g, ""));
       })
       .catch(() => {});
   }, []);
@@ -135,7 +137,7 @@ export default function Hero() {
               Voir mes projets
             </Button>
           </a>
-          <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
+          <a href={`https://wa.me/${whatsappNum}?text=${encodeURIComponent("Bonjour, je suis intéressé par vos services de développement.")}`} target="_blank" rel="noopener noreferrer">
             <Button size="lg" variant="outline" className="gap-2 text-base px-8 text-[#25D366] border-[#25D366] hover:bg-[#25D366]/10">
               <MessageCircle className="h-5 w-5" />
               WhatsApp

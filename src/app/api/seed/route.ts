@@ -176,7 +176,7 @@ export async function GET(request: NextRequest) {
           name: "Benewende.dev",
           email: "benewende.dev@gmail.com",
           phone: "+226 07 26 71 19",
-          whatsapp: "22607267119",
+          whatsapp: "2250708454592",
           location: "Ouagadougou, Burkina Faso",
           github: "https://github.com/benewendebrandstudios-design",
           linkedin: "",

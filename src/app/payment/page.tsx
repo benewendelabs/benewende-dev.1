@@ -20,7 +20,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
-const WHATSAPP_NUMBER = "22607267119";
+const WHATSAPP_NUMBER = "2250708454592";
 
 const PLANS = [
   {

@@ -168,7 +168,7 @@ async function convertFile(file: ConvertedFile, sourceImg: HTMLImageElement, qua
 
 export default function ConverterPage() {
   const [featureEnabled, setFeatureEnabled] = useState<boolean | null>(null);
-  const [whatsappUrl, setWhatsappUrl] = useState("https://wa.me/22607267119");
+  const [whatsappUrl, setWhatsappUrl] = useState("https://wa.me/2250708454592");
 
   useEffect(() => {
     fetch("/api/content/settings")

@@ -157,7 +157,7 @@ export default function DashboardPage() {
                 </div>
               </div>
             </div>
-            <a href="https://wa.me/22607267119" target="_blank" rel="noopener noreferrer">
+            <a href="https://wa.me/2250708454592" target="_blank" rel="noopener noreferrer">
               <Button size="sm" className="gap-1.5 bg-[#25D366] hover:bg-[#1da851] text-white">
                 <MessageCircle className="h-3.5 w-3.5" />
                 Support
@@ -202,7 +202,7 @@ export default function DashboardPage() {
             <p className="text-muted-foreground mb-6 max-w-md mx-auto">
               Vous n&apos;avez pas encore de projet. Contactez-nous pour démarrer votre prochain projet digital !
             </p>
-            <a href="https://wa.me/22607267119" target="_blank" rel="noopener noreferrer">
+            <a href="https://wa.me/2250708454592" target="_blank" rel="noopener noreferrer">
               <Button size="lg" className="gap-2 bg-[#25D366] hover:bg-[#1da851] text-white">
                 <MessageCircle className="h-5 w-5" />
                 Démarrer un projet
