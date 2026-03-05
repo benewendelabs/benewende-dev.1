@@ -12,6 +12,7 @@ const modelMap: Record<string, string> = {
   skills: "skillGroup",
   testimonials: "testimonialItem",
   experiences: "experienceItem",
+  pricing: "pricingPlan",
   settings: "siteSetting",
 };
 

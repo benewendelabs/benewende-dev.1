@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import {
   Users, Mail, FileText, TrendingUp, Eye, Trash2, Archive,
-  LogOut, ArrowLeft, Shield, FolderOpen, Briefcase, Code2,
+  LogOut, ArrowLeft, Shield, FolderOpen, Briefcase, Code2, DollarSign,
   Clock, Settings, Star, Bot, Cpu, ToggleLeft, ToggleRight,
 } from "lucide-react";
 import Link from "next/link";
@@ -28,7 +28,7 @@ interface ContactMsg {
   createdAt: string;
 }
 
-type TabId = "overview" | "projects" | "services" | "skills" | "testimonials" | "experiences" | "contacts" | "settings";
+type TabId = "overview" | "projects" | "services" | "pricing" | "skills" | "testimonials" | "experiences" | "contacts" | "settings";
 
 interface Stats { totalUsers: number; totalContacts: number; unreadContacts: number; totalCVs: number; }
 
@@ -83,6 +83,36 @@ const testimonialFields: FieldDef[] = [
   { key: "visible", label: "Visible", type: "boolean" },
 ];
 
+const pricingFields: FieldDef[] = [
+  { key: "serviceCategory", label: "Catégorie de service", type: "select", required: true, options: [
+    { value: "site-vitrine", label: "Site Vitrine" },
+    { value: "site-wordpress", label: "Site WordPress" },
+    { value: "boutique-shopify", label: "Boutique Shopify" },
+    { value: "webapp", label: "Web App Sur Mesure" },
+    { value: "saas", label: "Plateforme SaaS" },
+    { value: "mobile", label: "Application Mobile" },
+    { value: "ecommerce", label: "E-Commerce Custom" },
+    { value: "ia", label: "Solution IA" },
+    { value: "maintenance", label: "Maintenance & Support" },
+  ] },
+  { key: "tierName", label: "Nom du tier", type: "text", required: true, placeholder: "Essentiel, Pro, Premium, Sur Mesure..." },
+  { key: "tierLevel", label: "Niveau (0=basique, 1=milieu, 2=premium, 3=custom)", type: "number" },
+  { key: "description", label: "Description du tier", type: "textarea", placeholder: "Idéal pour les petites entreprises..." },
+  { key: "priceXOF", label: "Prix XOF", type: "text", required: true, placeholder: "500 000 FCFA" },
+  { key: "priceEUR", label: "Prix EUR", type: "text", required: true, placeholder: "800€" },
+  { key: "priceUSD", label: "Prix USD", type: "text", required: true, placeholder: "$900" },
+  { key: "features", label: "Fonctionnalités incluses", type: "json-array" },
+  { key: "deliveryTime", label: "Délai de livraison", type: "text", placeholder: "2-3 semaines" },
+  { key: "revisions", label: "Révisions incluses", type: "text", placeholder: "3 révisions" },
+  { key: "support", label: "Support inclus", type: "text", placeholder: "1 mois de support" },
+  { key: "maintenanceXOF", label: "Maintenance/mois XOF (optionnel)", type: "text", placeholder: "25 000 FCFA/mois" },
+  { key: "maintenanceEUR", label: "Maintenance/mois EUR (optionnel)", type: "text", placeholder: "40€/mois" },
+  { key: "maintenanceUSD", label: "Maintenance/mois USD (optionnel)", type: "text", placeholder: "$45/mois" },
+  { key: "popular", label: "Populaire (mis en avant)", type: "boolean" },
+  { key: "sortOrder", label: "Ordre", type: "number" },
+  { key: "visible", label: "Visible", type: "boolean" },
+];
+
 const experienceFields: FieldDef[] = [
   { key: "period", label: "Période", type: "text", required: true, placeholder: "2024 - Présent" },
   { key: "title", label: "Titre", type: "text", required: true },
@@ -98,6 +128,7 @@ const tabs: { id: TabId; label: string; icon: React.ElementType }[] = [
   { id: "overview", label: "Vue d'ensemble", icon: TrendingUp },
   { id: "projects", label: "Projets", icon: FolderOpen },
   { id: "services", label: "Services", icon: Briefcase },
+  { id: "pricing", label: "Tarifs", icon: DollarSign },
   { id: "skills", label: "Compétences", icon: Code2 },
   { id: "testimonials", label: "Témoignages", icon: Star },
   { id: "experiences", label: "Expérience", icon: Clock },
@@ -113,7 +144,7 @@ export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState<TabId>("overview");
   const [loading, setLoading] = useState(true);
   const [contentData, setContentData] = useState<Record<string, Record<string, unknown>[]>>({
-    projects: [], services: [], skills: [], testimonials: [], experiences: [],
+    projects: [], services: [], pricing: [], skills: [], testimonials: [], experiences: [],
   });
   const [siteSettings, setSiteSettings] = useState<Record<string, Record<string, unknown>>>({});
 
@@ -142,7 +173,7 @@ export default function AdminDashboard() {
           ]);
           if (statsRes.ok) setStats(await statsRes.json());
           if (contactsRes.ok) setContacts(await contactsRes.json());
-          await Promise.all(["projects", "services", "skills", "testimonials", "experiences", "settings"].map(fetchContent));
+          await Promise.all(["projects", "services", "pricing", "skills", "testimonials", "experiences", "settings"].map(fetchContent));
         } catch (e) { console.error("Admin fetch error:", e); }
         finally { setLoading(false); }
       })();
@@ -674,6 +705,19 @@ export default function AdminDashboard() {
               fields={serviceFields}
               items={contentData.services}
               {...crudFor("services")}
+            />
+          </motion.div>
+        )}
+
+        {/* Pricing tab */}
+        {activeTab === "pricing" && (
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+            <ContentManager
+              title="Grille Tarifaire"
+              type="pricing"
+              fields={pricingFields}
+              items={contentData.pricing}
+              {...crudFor("pricing")}
             />
           </motion.div>
         )}

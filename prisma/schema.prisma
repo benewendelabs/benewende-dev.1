@@ -154,6 +154,29 @@ model Upload {
   createdAt DateTime @default(now())
 }
 
+model PricingPlan {
+  id              String   @id @default(cuid())
+  serviceCategory String
+  tierName        String
+  tierLevel       Int      @default(0)
+  description     String   @default("")
+  priceXOF        String
+  priceEUR        String
+  priceUSD        String
+  features        String
+  deliveryTime    String   @default("")
+  revisions       String   @default("")
+  support         String   @default("")
+  maintenanceXOF  String?
+  maintenanceEUR  String?
+  maintenanceUSD  String?
+  popular         Boolean  @default(false)
+  sortOrder       Int      @default(0)
+  visible         Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
 model ClientProject {
   id          String             @id @default(cuid())
   userId      String

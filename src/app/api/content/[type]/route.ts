@@ -60,6 +60,22 @@ export async function GET(
           items.map((e) => ({ ...e, achievements: JSON.parse(e.achievements) }))
         );
       }
+      case "pricing": {
+        const items = await prisma.pricingPlan.findMany({
+          where: { visible: true },
+          orderBy: [{ serviceCategory: "asc" }, { tierLevel: "asc" }],
+        });
+        return NextResponse.json(
+          items.map((p) => ({
+            ...p,
+            features: JSON.parse(p.features),
+            price: { XOF: p.priceXOF, EUR: p.priceEUR, USD: p.priceUSD },
+            maintenance: p.maintenanceXOF
+              ? { XOF: p.maintenanceXOF, EUR: p.maintenanceEUR, USD: p.maintenanceUSD }
+              : null,
+          }))
+        );
+      }
       case "settings": {
         const items = await prisma.siteSetting.findMany();
         const map: Record<string, unknown> = {};
